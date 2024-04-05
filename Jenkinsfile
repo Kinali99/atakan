@@ -40,7 +40,7 @@ pipeline {
             }
             post {
                 always {
-                    robot outputPath: 'C:/Users/kinal/.jenkins/workspace/Labb Jenkins', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
+                    robot outputPath: 'Selenium/raport', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
                 }
             }
         }
