@@ -37,7 +37,7 @@ pipeline {
                 script {
                     //Navigera till selenuim mappen. Kör labSelenium.robot
                     dir('python -m robot C:/Users/kinal/.jenkins/workspace/Labb Jenkins/Selenium')
-                    bat (lab.Selenium.robot)
+                    bat lab.Selenium.robot
                 }
             }
             post {
