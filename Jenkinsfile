@@ -35,14 +35,12 @@ pipeline {
         stage('Build and Test Python Project') {
             steps {
                 script {
-                    //Navigera till selenuim mappen. Kör labSelenium.robot
-                    dir(Selenium/raport')
-                    bat lab.Selenium.robot
+                    bat 'python -m robot C:/Users/kinal/.jenkins/workspace/Labb_Jenkins/Selenium'
                 }
             }
             post {
                 always {
-                    robot outputPath: 'Selenium/raport', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
+                    robot outputPath: 'C:/Users/kinal/.jenkins/workspace/Labb_Jenkins', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
                 }
             }
         }
