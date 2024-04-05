@@ -35,7 +35,9 @@ pipeline {
         stage('Build and Test Python Project') {
             steps {
                 script {
-                    bat 'python -m robot C:/Users/kinal/.jenkins/workspace/Labb Jenkins/Selenium '
+                    //Navigera till selenuim mappen. Kör labSelenium.robot
+                    dir('python -m robot C:/Users/kinal/.jenkins/workspace/Labb Jenkins/Selenium')
+                    bat (lab.Selenium.robot)
                 }
             }
             post {
