@@ -1,46 +1,42 @@
 pipeline {
     agent any
+ 
     stages {
-        stage('Build test hamid') {
+        stage('Checkout') {
             steps {
-                script {
-                    // Navigera till TrailrunnerProject-mappen
-                    dir('TrailrunnerProject') {
-                        sh 'mvn compile'
-                    }
-                }
+                // Hämtar senaste kodversionen för den valda grenen
+                checkout scm
             }
         }
+ 
+        stage('Build') {
+            steps {
+                // Kompilerar Trailrunner-projektet
+                bat "mvn compile"
+            }
+        }
+ 
         stage('Test') {
             steps {
-                script {
-                    // Navigera till TrailrunnerProject-mappen
-                    dir('TrailrunnerProject') {
-                        sh 'mvn test'
-                    }
-                }
+                // Kör alla testfall för Trailrunner-projektet
+                bat "mvn test"
+                // Publicera testresultaten från Maven
+                junit 'target/surefire-reports/*.xml'
             }
         }
-        stage('Post Test') {
+ 
+        stage('Robot Framework Test') {
             steps {
-                script {
-                    // Navigera till TrailrunnerProject-mappen
-                    dir('TrailrunnerProject') {
-                        // Kör junit-kommandot för att läsa in testrapporter
-                        junit '**/TEST*.xml'
-                    }
-                }
-            }
-        }
-        stage('Build and Test Python Project') {
-            steps {
-                script {
-                    bat 'python -m robot C:/Users/kinal/.jenkins/workspace/Labb Jenkins/Selenium'
-                }
+                // Kör Robot Framework-test
+                bat 'python -m robot C:/Users/kinal/.jenkins/workspace/Labb Jenkins/Selenium'
             }
             post {
                 always {
-                    robot outputPath: 'C:/Users/kinal/.jenkins/workspace/Labb Jenkins', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
+                    // Publicera resultatet av Robot Framework-testerna
+                    robot outputPath: 'C:/Users/kinal/.jenkins/workspace/Labb Jenkins',
+                          passThreshold: 80.0,
+                          unstableThreshold: 70.0,
+                          onlyCritical: false
                 }
             }
         }
