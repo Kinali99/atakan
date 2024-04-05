@@ -35,12 +35,12 @@ pipeline {
         stage('Build and Test Python Project') {
             steps {
                 script {
-                    bat 'python -m robot "C:/Users/kinal/.jenkins/workspace/Labb Jenkins/Selenium"'
+                    bat 'python -m robot C:/Users/kinal/.jenkins/workspace/Labb Jenkins/Selenium'
                 }
             }
             post {
                 always {
-                    robot outputPath: '"C:/Users/kinal/.jenkins/workspace/Labb Jenkins"', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
+                    robot outputPath: 'C:/Users/kinal/.jenkins/workspace/Labb Jenkins', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
                 }
             }
         }
